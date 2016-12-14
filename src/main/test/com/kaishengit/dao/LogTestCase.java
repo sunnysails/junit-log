@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by sunny on 2016/12/14.
  */
-public class Log4jTestCase {
+public class LogTestCase {
     @Test
     public void testLog(){
-        Logger logger = LoggerFactory.getLogger(Log4jTestCase.class);
+        Logger logger = LoggerFactory.getLogger(LogTestCase.class);
 
         logger.trace("trace message");
         logger.debug("debug message");
