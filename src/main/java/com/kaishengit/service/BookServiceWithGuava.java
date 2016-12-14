@@ -1,18 +1,45 @@
 package com.kaishengit.service;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.kaishengit.dao.BookDao;
 import com.kaishengit.entity.Book;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by sunny on 2016/12/14.
  */
 public class BookServiceWithGuava {
-    private static LoadingCache<String ,Book> cache = CacheBuilder
+
+    private BookDao bookDao = new BookDao();
+
+    private static Cache<String ,Book> cache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterAccess(30,TimeUnit.SECONDS)
+            .build();
+    public Book findById(Integer id){
+        Book book = null;
+        try {
+            book = cache.get("book:" + id, new Callable<Book>() {
+                @Override
+                public Book call() throws Exception {
+                    return bookDao.findById(id);
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+
+
+/*    private static LoadingCache<String ,Book> cache = CacheBuilder
             .newBuilder()
             .maximumSize(100)
             .expireAfterAccess(50, TimeUnit.SECONDS)
@@ -27,5 +54,5 @@ public class BookServiceWithGuava {
     public Book findById(Integer id){
         Book book = cache.getUnchecked(id.toString());
         return book;
-    }
+    }*/
 }
