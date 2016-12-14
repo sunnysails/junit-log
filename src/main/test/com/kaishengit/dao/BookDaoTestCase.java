@@ -1,6 +1,7 @@
 package com.kaishengit.dao;
 
 
+import com.kaishengit.dao.BookDao;
 import com.kaishengit.entity.Book;
 import org.junit.Before;
 import org.junit.Test;

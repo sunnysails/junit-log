@@ -11,6 +11,18 @@ public class Book {
     private Integer total;
     private String isbn;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", nowNumber=" + nowNumber +
+                ", total=" + total +
+                ", isbn='" + isbn + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
